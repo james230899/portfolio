@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center my-3">
+        <h1>Test</h1>
+        <p>This is a test page</p>
+        <div class="row w-100">
+            <div class="col-6">
+                <canvas id="cpiChart" ></canvas>
+            </div>
+            <div class="col-6">
+                <canvas id="cpiChart2" ></canvas>
+            </div>
+        </div>    
+        <div class="row w-100 d-flex justify-content-center">
+            <div class="col-8">
+                <canvas id="incomeChart" ></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'headsup/js/test.js' %}"></script>
+{% endblock %}

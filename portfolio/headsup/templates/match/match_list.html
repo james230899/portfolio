@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center my-3">
+        <h1>Match List</h1>
+        {% if matches %}
+            {% for match in matches %}
+            <p>{{ match }} <a href="{% url 'view_match' match.id%}">Link</a></p>
+            {% endfor %}
+            <a href="{% url 'create_match' %}">Create a new Match</a>
+        {% else %}
+        <p>No matches found. <a href="{% url 'create_match' %}">Start a Match</a></p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+

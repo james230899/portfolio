@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center my-3">
+    <h1>Player</h1>
+    <p>Hello World. Chart It</p>
+
+    <form method="POST" style="width: 26rem;">
+        {% csrf_token %}
+        <!-- First Name input -->
+        <div class="form-outline mb-4">
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" />
+        </div>
+        <!-- Last Name input -->
+        <div class="form-outline mb-4">
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name"/>
+        </div>
+        <!-- Handedness radio buttons -->
+        <p><strong>Left/Right Handed</strong></p>
+        <div class="form-check mb-2">
+            <input class="form-check-input" id="right" type="radio" name="handedness" value="RIGHT" checked="checked">
+            <label class="form-check-label" for="right">Right Handed</label>
+        </div>
+        <div class="form-check mb-4">
+            <input class="form-check-input" id="left" type="radio" name="handedness" value="LEFT">
+            <label class="form-check-label" for="left">Left Handed</label>
+        </div>
+        <!-- Shot Handedness -->
+        <div class="row">
+            <div class="col-6">
+                <p><strong>Forehand</strong></p>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" id="fh_one" type="radio" name="fh_handedness" value="ONE" checked="checked">
+                    <label class="form-check-label" for="fh_one">One Handed</label>
+                </div>
+                <div class="form-check mb-4">
+                    <input class="form-check-input" id="fh_two" type="radio" name="fh_handedness" value="TWO">
+                    <label class="form-check-label" for="fh_two">Two Handed</label>
+                </div>
+            </div>
+            <div class="col-6">
+                <p><strong>Backhand</strong></p>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" id="bh_one" type="radio" name="bh_handedness" value="ONE" checked="checked">
+                    <label class="form-check-label" for="bh_one">One Handed</label>
+                </div>
+                <div class="form-check mb-4">
+                    <input class="form-check-input" id="bh_two" type="radio" name="bh_handedness" value="TWO">
+                    <label class="form-check-label" for="bh_two">Two Handed</label>
+                </div>
+            </div>
+        </div>
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Submit</button>
+    </form>
+</div>
+{% endblock %}

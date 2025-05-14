@@ -1,0 +1,18 @@
+/* Default color for the text and SVG */
+#logo {
+    color: black;  /* Set the default color (you can change it to any color) */
+    transition: color 0.3s ease;  /* Smooth transition for color change */
+}
+
+/* When hovering over the <a> element, change the color for both text and SVG */
+#logo:hover {
+    color: blue;  /* Change to the color you want on hover */
+}
+
+#logo svg {
+    fill: currentColor;  /* Inherit color from parent */
+    transition: fill 0.3s ease;  /* Smooth transition for fill color */
+}
+.nav-link:hover {
+    color: blue;
+}

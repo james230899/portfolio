@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center my-3">
+        <h1>Match</h1>
+        {% if players|length > 1 %}
+        <form method="POST" style="width: 26rem;">
+            {% csrf_token %}
+            
+            <!-- Show Errors -->
+            {% if errors %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Form submission failed:</strong>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        
+            <!-- Players -->
+            <div class="form-outline mb-4">
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <select class="form-select" id="player_1" name="player_1" >
+                            <option selected disabled>Select Player 1</option>
+                            {% for player in players %}
+                                <option value="{{ player.id }}">{{ player.first_name }} {{ player.last_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select" id="player_2" name="player_2" >
+                            <option selected disabled>Select Player 2</option>
+                            {% for player in players %}
+                                <option value="{{ player.id }}">{{ player.first_name }} {{ player.last_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Match Format -->
+            <div class="form-outline mb-4">
+                <select class="form-select" id="format" name="format" >
+                    <option selected disabled>Select the Match Format</option>
+                    {% for value, label in format_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <!-- Serving First -->
+            <div class="form-outline mb-4">
+                <label for="serving_first" class="form-label">Who will serve first?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="serving_first" id="serving_first_1" value="player_1" checked>
+                    <label class="form-check-label" for="serving_first_1">
+                        Player 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="serving_first" id="serving_first_2" value="player_2">
+                    <label class="form-check-label" for="serving_first_2">
+                        Player 2
+                    </label>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-outline mb-4">
+                <input type="text" class="form-control" id="location" name="location" placeholder="Enter the Match Location" >
+            </div>
+
+            <!-- Tournament -->
+            <div class="form-outline mb-4">
+                <input type="text" class="form-control" id="tournament" name="tournament" placeholder="Enter the Tournament/Competition" >
+            </div>
+
+            <!-- Date -->
+            <div class="form-outline mb-4">
+                <input type="date" class="form-control" name="date" >
+            </div>
+            
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Start Match</button>
+        </form>
+        
+        
+        {% elif players|length == 1 %}
+            <p>You need at least 2 players for a match. <a href="{% url 'player' %}">Add a player</a></p>
+        {% else %}
+            <p>No players found. <a href="{% url 'player' %}">Add a player</a> first.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+

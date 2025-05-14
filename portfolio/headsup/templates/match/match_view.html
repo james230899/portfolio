@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center my-3">
+        <h1>Match </h1>
+        <p><strong>Players</strong></p>
+        <ul>
+            <li> {{ players.0.first_name}} {{ players.0.last_name }} <a href="{% url 'view_player' players.0.id %}">Profile</a></li>
+            <li> {{ players.1.first_name }} {{ players.1.last_name }} <a href="{% url 'view_player' players.1.id %}">Profile</a></li>
+        </ul>
+        <p><strong>Match Status: </strong>{{ match.get_status_display }}</p>
+        {% if match.status == 'COMPLETE' %}
+            <p>Winner: {{ match.winner.first_name }} {{ match.winner.last_name }}</p>
+            <p>Loser: {{ match.loser.first_name }} {{ match.loser.last_name }}</p>
+        {% endif %}
+        <p><strong>Match Details</strong></p>
+        <p> Date: {{ match.date }}</p>
+        <p> Location: {{ match.location }}</p>
+        <p> Tournament: {{ match.tournament}}</p>
+    </div>
+{% endblock %}
+
+
+

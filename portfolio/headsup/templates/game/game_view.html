@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+{% csrf_token %}
+    <div class="container d-flex flex-column align-items-center my-3">
+        <p>{{ match.location }}: {{ match.tournament }}</p>
+        <h1>Players</h1>
+        <div class="row justify-content-center text-center">  
+            <div class="col-auto">
+                <p>
+                    <a href="{% url 'view_player' players.0.id %}">
+                        {{ players.0.first_name }} {{ players.0.last_name }}
+                    </a>
+                </p>
+                <span id="serving_icon_0" {% if serving != 0 %}style="display:none;"{% endif %}>🎾</span>
+            </div>
+            <div class="col-auto">
+                <p>VS</p>
+            </div>
+            <div class="col-auto">
+                <p>
+                    <a href="{% url 'view_player' players.1.id %}">
+                        {{ players.1.first_name }} {{ players.1.last_name }}
+                    </a>
+                </p>
+                <span id="serving_icon_1" {% if serving != 1 %}style="display:none;"{% endif %}>🎾</span>
+            </div>         
+        </div>
+        
+        <h1>Set</h1>
+        <div>Score: <span id="player1_set">0</span> - <span id="player2_set">0</span></div>
+        <br/>
+        <h1>Game</h1>
+        <div>Score: <span id="player1_game">0</span> - <span id="player2_game">0</span></div>
+        <br/>
+        <h1>Point</h1>
+        <div>Sequence: <span id="sequence"></span></div>
+        {% if serving == 0 %}
+        {% with players.0 as server %}
+            <div>Serving: <span id="serving_display">{{ server.first_name }} {{ server.last_name }}</span></div>
+        {% endwith %}
+        {% else %}
+        {% with players.1 as server %}
+            <div>Serving: <span id="serving_display">{{ server.first_name }} {{ server.last_name }}</span></div>
+        {% endwith %}
+        {% endif %}
+
+
+        <div>Score: <span id="server">0</span> - <span id="receiver">0</span></div>
+        <br/>
+        <div class="row justify-content-center text-center mb-3">
+            <div class="col-auto">
+                <button onclick="update_score(serving)">Server</button>
+            </div>
+            <div class="col-auto">
+                <button onclick="update_score(receiving)">Receiver</button>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center mb-3">
+            <div class="col-auto">
+                <button onclick="update_game(serving)">Server Game</button>
+            </div>
+            <div class="col-auto">
+                <button onclick="update_game(receiving)">Receiver Game</button>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="col-auto">
+                <button onclick="update_set(serving)">Server Set</button>
+            </div>
+            <div class="col-auto">
+                <button onclick="update_set(receiving)">Receiver Set</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let players = [
+            "{{ players.0.first_name }} {{ players.0.last_name }}",
+            "{{ players.1.first_name }} {{ players.1.last_name }}"
+        ];
+        let serving = {{ serving }};
+        let receiving = {{ receiving }};
+        let matchFormat = {{ match.format }};
+        let matchId = {{ match.id }};
+    </script>
+    <script src="{% static 'headsup/js/point.js' %}"></script>
+{% endblock %}
+
+
+
