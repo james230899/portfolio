@@ -1,0 +1,75 @@
+{% extends "polls/layout.html" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <h1 class="text-center">{{ question.question_title }}</h1>
+            <div class="col-12 col-lg-6">
+                <form action="{% url 'polls:vote_ranked' question.id %}" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        {% if has_voted %}
+                            <div class="alert alert-warning text-center">
+                                You have already voted on this question
+                            </div>
+                        {% endif %}
+                        {% if error_message %}
+                            <div class="alert alert-danger text-center">
+                            {{ error_message }}
+                            </div>
+                        {% endif %}
+                        <div class="border rounded p-4 bg-white">
+                            <p><strong>Q: </strong>{{ question.question_text }}</p>
+                            <hr/>
+                            {% if not has_voted %}
+                                {% if question.choice_set.all %}
+                                    {% for select_index in question.choice_set.all %}
+                                        <div class="row mb-2 align-items-center">
+                                            <div class="col-auto">
+                                                <label class="mb-0"><strong>{{ forloop.counter }}:</strong></label>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-select w-100" name="ranked_choice_{{ forloop.counter0 }}">
+                                                {% for option_index in question.choice_set.all %}
+                                                    <option value="{{ option_index.id }}"
+                                                    {% if forloop.parentloop.counter0 == forloop.counter0 %}selected{% endif %}
+                                                    {% if has_voted %}disabled{% endif %}>
+                                                    {{ option_index.choice_text }}
+                                                    </option>
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                {% endfor %}
+                                {% else %}
+                                    There are no choices available for this question
+                                {% endif %}
+                            {% else%}
+                                {% for choice_text in ranking %}
+                                <div class="row mb-2 align-items-center">
+                                    <div class="col-auto">
+                                        <label class="mb-0"><strong>{{ forloop.counter }}:</strong></label>
+                                    </div>
+                                    <div class="col">
+                                        <div class="w-100 border rounded py-2 px-3">
+                                            {{ choice_text }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="d-flex justify-content-between mt-2">
+                        <a class="btn btn-secondary" href="{% url 'polls:ranked_choices' %}">Go Back</a>
+                        <div class="btn-group">
+                            <a class="btn btn-secondary" href="{% url 'polls:results_ranked' question.id %}">Results</a>
+                            <input class="btn btn-primary" {% if has_voted or not question.choice_set.exists %}
+                            disabled{% endif %} type="submit" value="Vote">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

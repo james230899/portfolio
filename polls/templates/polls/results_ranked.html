@@ -1,0 +1,97 @@
+{% extends "polls/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <h1 class="text-center">{{ question.question_title }}</h1>
+        <div class="col-12 col-lg-6">
+            <fieldset>
+                <div class="border rounded py-3 px-4 bg-white" >
+                    <h3 class="text-center">Your Vote</h3>
+                    {% if error_message %}
+                    <div class="alert alert-warning text-center mt-2">
+                       {{error_message}}
+                    </div>
+                    {% else %}
+                        {% for choice_text in ranking %}
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-auto">
+                                    <label class="mb-0"><strong>{{ forloop.counter }}:</strong></label>
+                                </div>
+                                <div class="col">
+                                    <div class="w-100 border rounded py-2 px-3">
+                                        {{ choice_text }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    {% if question.choice_set.all and not no_results%}
+    <!-- There are choices and results -->
+    <div class="row justify-content-center mt-2">
+        <div class="col-12 col-lg-6">
+            <div class="border rounded py-3 px-4 bg-white">
+                <h3 class="text-center">Results</h3>
+                    <div class="list-group">
+                        {% for choice_text, vote_count in votes_dict.items %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ choice_text }}</span>
+                                <span class="badge rounded-pill bg{% if vote_count == max_votes %}-success{% else %}-secondary{% endif %}">
+                                    {{ vote_count }} vote{{ vote_count|pluralize }}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                <div class="pt-2 px-4 text-center">
+                    <p> Points are allocated based on rank. </p>
+                    <p> The higher the preference for a choice and the greater the number of choices the higher the points allocated. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Data for Chart -->
+    {{ data|json_script:"chart-data" }}
+    {{ labels|json_script:"chart-labels" }}
+    <div class="row justify-content-center mt-2">
+        <div class="col-12 col-lg-6">
+            <div class="border rounded pt-4 px-4 bg-white">
+            <div id="chart" class="mx-auto" style="width: 100%;"></div>
+            </div>
+            <div class="my-2">
+                <a class="btn btn-secondary" href="{% url 'polls:detail' question.id %}">Go Back</a>
+            </div>
+        </div>
+    </div>
+    {% elif question.choice_set.all and no_results %}
+    <div class="row justify-content-center mt-2">
+        <div class="col-12 col-lg-6">
+            <div class="border rounded py-4 px-4 bg-white">
+                No results yet. Watch this space...
+            </div>
+            <div class="my-2">
+                <a class="btn btn-secondary" href="{% url 'polls:ranked_choices' %}">Go Back</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row justify-content-center mt-2">
+        <div class="col-12 col-lg-6">
+            <div>
+                <a class="btn btn-secondary" href="{% url 'polls:ranked_choices' %}">Go Back</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script src="{% static 'js/barchart.js' %}"></script></script>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.tutorialjinni.com/d3/7.9.0/d3.js"></script>
+{% endblock %}

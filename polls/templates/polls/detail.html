@@ -1,0 +1,49 @@
+{% extends "polls/layout.html" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <h1 class="text-center">{{ question.question_title }}</h1>
+            <div class="col-12 col-lg-6">
+                <form action="{% url 'polls:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        {% if has_voted %}
+                            <div class="alert alert-warning text-center">
+                                You have already voted on this question
+                            </div>
+                        {% endif %}
+                        {% if error_message %}
+                            <div class="alert alert-danger text-center">
+                            {{ error_message }}
+                            </div>
+                        {% endif %}
+                        <div class="border rounded p-4 bg-white">
+                            <p><strong>Q: </strong>{{ question.question_text }}</p>
+                            <hr/>
+                            {% if question.choice_set.all %}
+                                {% for choice in question.choice_set.all %}
+                                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+                                    {% if has_voted %}disabled{% endif %}
+                                    {% if was_chosen and was_chosen.id == choice.id %}checked{% endif %}>
+                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                            {% endfor %}
+                            
+                            {% else %}
+                                There are no choices available for this question
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="d-flex justify-content-between mt-2">
+                        <a class="btn btn-secondary" href="{% url 'polls:index' %}">Go Back</a>
+                        <div class="btn-group">
+                            <a class="btn btn-secondary" href="{% url 'polls:results' question.id %}">Results</a>
+                            <input class="btn btn-primary" {% if has_voted or not question.choice_set.exists %}
+                            disabled{% endif %} type="submit" value="Vote">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center my-3">
+    <h1>{{ player.first_name }} {{ player.last_name }}</h1>
+    <p>Hand: {{ player.get_handedness_display }}</p>
+    <p>Forehand: {{ player.get_fh_handedness_display }}</p>
+    <p>Backhand: {{ player.get_bh_handedness_display }}</p>
+    <h2>Matches</h2>
+    {% for match in matches %}
+    <p>{{ match }} <a href="{% url 'view_match' match.id%}">Link</a></p>
+    {% empty %}
+        <p>No matches found.</p>
+    {% endfor %}
+
+</div>
+{% endblock %}
