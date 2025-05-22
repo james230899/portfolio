@@ -87,7 +87,7 @@ def question_result(request, question_id):
 def question_result_ranked(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     choices = question.choice_set.all()
-    no_results = not any(choice.votes > 0 for choice in choices)
+    no_results = (not any(choice.votes > 0 for choice in choices) or not request.user.is_authenticated)
     max_votes = max((choice.votes for choice in choices), default=0)
     
     try:
@@ -98,6 +98,12 @@ def question_result_ranked(request, question_id):
             "ranking": None,
             "error_message": "You have not voted in this poll.",
             "no_results": no_results,
+        })
+    except TypeError:
+        return render(request, "polls/results_ranked.html", {
+            "question": question,
+            "ranking": None,
+            "no_results": True,
         })
 
     # Resolve choice IDs to choice texts

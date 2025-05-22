@@ -6,14 +6,14 @@
     <div class="row justify-content-center">
         <h1 class="text-center">{{ question.question_title }}</h1>
         <div class="col-12 col-lg-6">
+            {% if error_message %}
+                <div class="alert alert-warning text-center mt-2">
+                    {{error_message}}
+                </div>
+            {% elif ranking %}
             <fieldset>
                 <div class="border rounded py-3 px-4 bg-white" >
                     <h3 class="text-center">Your Vote</h3>
-                    {% if error_message %}
-                    <div class="alert alert-warning text-center mt-2">
-                       {{error_message}}
-                    </div>
-                    {% else %}
                         {% for choice_text in ranking %}
                             <div class="row mb-2 align-items-center">
                                 <div class="col-auto">
@@ -26,9 +26,9 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    {% endif %}
                 </div>
             </fieldset>
+            {% endif %}
         </div>
     </div>
     {% if question.choice_set.all and not no_results%}
@@ -69,7 +69,7 @@
         </div>
     </div>
     {% elif question.choice_set.all and no_results %}
-    <div class="row justify-content-center mt-2">
+    <div class="row justify-content-center ">
         <div class="col-12 col-lg-6">
             <div class="border rounded py-4 px-4 bg-white">
                 No results yet. Watch this space...

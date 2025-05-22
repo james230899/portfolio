@@ -1,0 +1,112 @@
+[
+  {
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+      "question_title": "Favorite Cuisine",
+      "question_text": "What type of cuisine do you enjoy the most?",
+      "pub_date": "2025-05-20T10:00:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 2,
+    "fields": {
+      "question_title": "Preferred Season",
+      "question_text": "Which season do you like the most?",
+      "pub_date": "2025-05-19T14:30:00Z",
+      "voters": [],
+      "ranked_choice": false
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 3,
+    "fields": {
+      "question_title": "Weekend Activity",
+      "question_text": "What do you typically enjoy doing on the weekend?",
+      "pub_date": "2025-05-18T09:15:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 4,
+    "fields": {
+      "question_title": "Ideal Vacation",
+      "question_text": "Which type of vacation sounds most appealing to you?",
+      "pub_date": "2025-05-17T16:45:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 5,
+    "fields": {
+      "question_title": "Music Taste",
+      "question_text": "What genre of music do you listen to the most?",
+      "pub_date": "2025-05-16T12:00:00Z",
+      "voters": [],
+      "ranked_choice": false
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 6,
+    "fields": {
+      "question_title": "Pet Preference",
+      "question_text": "If you could have a pet, which would you choose?",
+      "pub_date": "2025-05-15T11:30:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 7,
+    "fields": {
+      "question_title": "Morning Beverage",
+      "question_text": "What do you usually drink first thing in the morning?",
+      "pub_date": "2025-05-14T07:00:00Z",
+      "voters": [],
+      "ranked_choice": false
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 8,
+    "fields": {
+      "question_title": "Hobby Time",
+      "question_text": "Which hobby do you enjoy the most in your free time?",
+      "pub_date": "2025-05-13T18:20:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 9,
+    "fields": {
+      "question_title": "Weekend Snack",
+      "question_text": "What's your favorite snack to enjoy on weekends?",
+      "pub_date": "2025-05-12T15:10:00Z",
+      "voters": [],
+      "ranked_choice": false
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 10,
+    "fields": {
+      "question_title": "Preferred Exercise",
+      "question_text": "Which form of physical activity do you prefer?",
+      "pub_date": "2025-05-11T20:40:00Z",
+      "voters": [],
+      "ranked_choice": true
+    }
+  }
+]
